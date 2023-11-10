@@ -157,7 +157,7 @@ export const Navbar = () => {
                 </div>
             </div>
             <div className={
-                menuOpen ? "fixed left-0 top-0 w-72 h-full bg-[#fbfbfa] dark:bg-[#202020] p-6 z-50 rounded-r-2xl border-r" : "hidden"
+                menuOpen ? "fixed left-0 top-0 w-72  h-full bg-[#fbfbfa] dark:bg-[#202020] p-6 z-50 rounded-r-2xl border-r" : "hidden"
             }
             style={{ overflowY: "auto" }}
             >

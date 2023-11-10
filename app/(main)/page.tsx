@@ -1,3 +1,5 @@
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Heading } from "./_components/heading";

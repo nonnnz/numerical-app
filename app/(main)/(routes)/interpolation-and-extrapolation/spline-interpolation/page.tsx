@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Parser } from "expr-eval";
 import clsx from "clsx";
 import * as math from "mathjs";
+import {quadraticInterpolation} from '@/components/quadratic';
+import { cubicSplineInterpolation } from '@/components/cubic-spline-interpolation';
 import katex from "katex";
 import Matrix from '@/app/(main)/_components/matrix';
 import { Settings, Plus,  Minus} from "lucide-react";
@@ -74,106 +76,30 @@ const SplineInterpolation = () => {
                 }
             }
         } else if (findMt === 'Quadratic') {
-            const n_Unknown = 3 * (x.length - 1);
-            // initialize matrix
-            var m = new Array(n_Unknown);
-            for (var i = 0; i < m.length; i++) {
-                m[i] = new Array(n_Unknown+1);
-                for (var j = 0; j < m[i].length; j++) {
-                    m[i][j] = 0;
+            let data = [];
+            for(let i = 0; i < n; i++) {
+                data.push({x: x[i], y: y[i]});
+            }
+            const spline = quadraticInterpolation(data);
+            // got a b c
+            for(let i = 0; i<n;i++) {
+                if(x[i] <= pfind && pfind <= x[i+1]) {
+                    result = spline[i].a * Math.pow(pfind,2) + spline[i].b * pfind + spline[i].c;
+                    break;
                 }
             }
-            console.log(math.clone(m));
-        
-            // through points equations
-            for (let i = 0, j = 1; j < x.length - 1; i += 2, j++) {
-                m[i][(j - 1) * 3] = Math.pow(x[j], 2); // a
-                m[i][(j - 1) * 3 + 1] = x[j]; // b
-                m[i][(j - 1) * 3 + 2] = 1; // c
-                m[i][n_Unknown] = y[j]; // B
-                m[i + 1][j * 3] = Math.pow(x[j], 2);
-                m[i + 1][j * 3 + 1] = x[j];
-                m[i + 1][j * 3 + 2] = 1;
-                m[i + 1][n_Unknown] = y[j];
-            }
-        
-            // begin, end
-            for (let i = 2 * (x.length - 2), j = 0; j < 2; i++, j++) {
-                m[i][j * 3 * (x.length - 1)] = Math.pow(x[j * (x.length - 1)], 2); // a
-                m[i][j * 3 * (x.length - 1) + 1] = x[j * (x.length - 1)]; // b
-                m[i][j * 3 * (x.length - 1) + 2] = 1; // c
-                m[i][n_Unknown] = y[j * (x.length - 1)]; // B
-            }
-        
-            // derivative equations
-            for (let i = (x.length - 1) * 2, j = 0; i < n_Unknown - 1; i++, j++) {
-                m[i][j * 3] = 2 * x[j + 1];
-                m[i][j * 3 + 1] = 1;
-                m[i][j * 3 + 3] = -2 * x[j + 1];
-                m[i][j * 3 + 4] = -1;
-            }
-        
-            // a1 = 0
-            m[n_Unknown - 1][0] = 1;
-
-            console.log(math.clone(m));
-        
-            // gauss jordan
-            // forward
-            for (let i = 0; i < n_Unknown - 1; i++) {
-                if (m[i][i] === 0) {
-                    let c = 1;
-                    while (i + c < n_Unknown && m[i + c][i] === 0) c++;
-                    for (let j = i, k = 0; k <= n_Unknown; k++) {
-                        const temp = m[j][k];
-                        m[j][k] = m[j + c][k];
-                        m[j + c][k] = temp;
-                    }
-                }
-                for (let j = i + 1; j < n_Unknown; j++) {
-                    const factor = m[j][i] / m[i][i];
-                    for (let k = i; k < n_Unknown + 1; k++) {
-                        m[j][k] = m[j][k] - m[i][k] * factor;
-                        // m[i][j] = Math.abs(m[i][j]) < 1e-6 ? 0 : m[i][j]; // define zero
-                    }
-                }
-            }
-
-            console.log(math.clone(m));
-        
-            // back eli
-            for (let k = n_Unknown - 1; k >= 0; k--) {
-                for (let i = k - 1; i >= 0; i--) {
-                    const factor = m[i][k] / m[k][k];
-                    for (let j = k; j < n_Unknown + 1; j++) {
-                        m[i][j] = m[i][j] - factor * m[k][j];
-                        // m[i][j] = Math.abs(m[i][j]) < 1e-6 ? 0 : m[i][j]; // define zero
-                    }
-                }
-            }
-
-            console.log(math.clone(m));
-        
-            // normalize to 1
-            for (let i = 0; i < n_Unknown; i++) {
-                const pivot = m[i][i];
-                m[i][i] /= pivot;
-                m[i][n_Unknown] /= pivot;
-            }
-            
-            console.log(math.clone(m));
-            const eq: number[] = m.map((row) => row[n_Unknown]);
-            for (let i = 0; i < x.length - 1; i++) {
-                if (pfind >= x[i] && pfind <= x[i + 1]) {
-                    result = eq[i * 3] * Math.pow(pfind, 2) + eq[i * 3 + 1] * pfind + eq[i * 3 + 2];
-                }
-            }
-            console.log(eq);
-
-            
-        
-            
         } else if (findMt === 'Cubic') {
+            let data = [];
+            for(let i = 0; i < n; i++) {
+                data.push({x: x[i], y: y[i]});
+            }
+            const spline = cubicSplineInterpolation(data);
+            for(let i = 0; i<n;i++) {
+                if(x[i] <= pfind && pfind <= x[i+1]) {
+                    result = spline[i].a * Math.pow(pfind,2) + spline[i].b * pfind + spline[i].c;
+                    break;
+                }
+            }
 
         }
         array.push({iter: n});
