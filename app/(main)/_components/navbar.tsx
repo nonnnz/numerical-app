@@ -1,6 +1,6 @@
 "use client";
 
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import Link from "next/link";
 
@@ -19,7 +19,6 @@ export const Navbar = () => {
     const scrolled = useScrollTop();
     const [menuOpen, setMenuOpen] = useState(false);
     const [subMenuOpen, setSubMenuOpen] = useState<number | null>(null);
-
 
     const handleNavToggle = () => {
         setMenuOpen(!menuOpen);

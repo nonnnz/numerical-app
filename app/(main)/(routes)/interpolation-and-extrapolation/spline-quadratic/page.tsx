@@ -2,23 +2,39 @@
 import React, {useState, useEffect} from 'react';
 import * as math from 'mathjs';
 import { Button } from "@/components/ui/button";
+import { useConvexAuth, useQuery } from "convex/react";
 import {quadraticInterpolation} from '@/components/quadratic';
 import { cubicSplineInterpolation } from '@/components/cubic-spline-interpolation';
 import Plotly from 'plotly.js-dist-min'
-import { count } from 'console';
+import { useMutation } from "convex/react";
+import { useUser } from "@clerk/clerk-react"
+import { api } from "@/convex/_generated/api";
 
 const SplineQuad = () => {
-     
+    const { user } = useUser();
+    const create = useMutation(api.iterpolation.create);
+    const iterpolation = useQuery(api.iterpolation.get);
+    
     // const [x, setX] = useState<string>('2 4 6 8 10');
     // const [y, setY] = useState<string>('9.5 8 10.5 39.5 72.5');
-    const [xin, setXin] = useState<string[]>(['2', '4', '6', '8', '10']);
-    const [yin, setYin] = useState<string[]>(['9.5', '8', '10.5', '39.5', '72.5']);
-    const [find, setFind] = useState<string>('4.5');
-    const [result, setResult] = useState<any>();
+    const [xin, setXin] = useState<string[]>(['', '', '', '', '']);
+    const [yin, setYin] = useState<string[]>(['', '', '', '', '']);
+    const [find, setFind] = useState<string>('');
+    const [result, setResult] = useState<string>('');
     const [dataPlot, setDataPlot] = useState<any>([]);
     const [plot, setPlot] = useState<any>([]);
     const [dimension, setDimension] = useState<number>(5);
-
+    const sample = () => {
+        setXin(['2', '4', '6', '8', '10']);
+        setYin(['9.5', '8', '10.5', '39.5', '72.5']);
+        setFind('4.5');
+        setDimension(5);
+    }
+    const onCreate = (re:string) => {
+        const xJsonString = JSON.stringify(xin);
+        const yJsonString = JSON.stringify(yin);
+        const promise = create({ x: xJsonString, y: yJsonString, find: find, result: re, type: 'spline-quadratic' });
+    }
     useEffect(() => {
         setDimensionFunc();
     }, [dimension]);
@@ -49,15 +65,16 @@ const SplineQuad = () => {
                 }
             }
         }
-        let result = eq(dfind);
-        console.log(result);
+        let _result = eq(dfind);
+        console.log(_result);
         let arr = [];
         for(let i = pointx[0]; i <= pointx[pointx.length-1]; i+=0.003) {
             arr.push({x: i, y: eq(i)});
         }
         setPlot(arr);
-        setResult(result);
+        setResult(_result.toString());
         setDataPlot(data);
+        onCreate(_result.toString());
     }
 
     const setDimensionFunc = () => {
@@ -104,6 +121,23 @@ const SplineQuad = () => {
 
     return ( 
         <div className='flex flex-col p-8 justify-center'>
+            <div>
+                {iterpolation?.map((e:any) => (
+                    <div className='flex flex-row space-x-4'>
+                        <div>{e.x}</div>
+                        <div>{e.y}</div>
+                        <div>{e.find}</div>
+                        <div>{e.result}</div>
+                        <Button onClick={(event) =>{
+                            setXin(JSON.parse(e.x));
+                            setYin(JSON.parse(e.y));
+                            setFind(e.find);
+                            setResult(e.result);
+                        }}>Get</Button>
+                    </div>
+                )
+                )}
+            </div>
             <div className='flex flex-col space-y-4 border md:w-[750px] bg-[#111111] rounded p-4'>
                 <h1>Spline Quadratic</h1>
                 {/* <div>x</div>
@@ -129,7 +163,7 @@ const SplineQuad = () => {
                             <td><input type="text" 
                             value={xin[i]} onChange={(e) => {
                                 const inputValue = e.target.value;
-                                const numericValue = inputValue.replace(/[^-0-9]/g, '');
+                                const numericValue = inputValue.replace(/[^-0-9.]/g, '');
                                 const newx_in = [...xin];
                                 newx_in[i] = numericValue;
                                 setXin(newx_in);
@@ -137,7 +171,7 @@ const SplineQuad = () => {
                             <td><input type="text" 
                             value={yin[i]} onChange={(e) => {
                                 const inputValue = e.target.value;
-                                const numericValue = inputValue.replace(/[^-0-9]/g, '');
+                                const numericValue = inputValue.replace(/[^-0-9.]/g, '');
                                 const newyin = [...yin];
                                 newyin[i] = numericValue;
                                 setYin(newyin);
@@ -149,6 +183,7 @@ const SplineQuad = () => {
 
                 <Button onClick={cal}>calculate</Button>
                 <Button onClick={callPlot}>plot</Button>
+                <Button onClick={sample}>get example</Button>
             </div>
             <div className='flex flex-col mt-4 space-y-4 border w-min bg-[#111111] rounded p-4'>
                 <h1>Result</h1>
