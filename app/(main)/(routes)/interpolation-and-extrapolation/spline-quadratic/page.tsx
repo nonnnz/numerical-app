@@ -14,9 +14,7 @@ const SplineQuad = () => {
     const { user } = useUser();
     const create = useMutation(api.iterpolation.create);
     const iterpolation = useQuery(api.iterpolation.get);
-    
-    // const [x, setX] = useState<string>('2 4 6 8 10');
-    // const [y, setY] = useState<string>('9.5 8 10.5 39.5 72.5');
+
     const [xin, setXin] = useState<string[]>(['', '', '', '', '']);
     const [yin, setYin] = useState<string[]>(['', '', '', '', '']);
     const [find, setFind] = useState<string>('');
