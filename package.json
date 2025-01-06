@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "now-build": "next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.27.2",
