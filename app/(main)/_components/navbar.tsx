@@ -36,19 +36,24 @@ export const Navbar = () => {
 
   // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    // Only run on the client side
+    if (typeof window !== "undefined") {
+      const handleScroll = () => {
+        if (window.scrollY > 0) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
+      };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll);
+
+      // Cleanup function to remove event listener
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
-  // Handle hydration
+  // Hydration check to ensure that the client-side rendering is complete
   useEffect(() => {
     setIsMounted(true);
   }, []);
