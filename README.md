@@ -63,11 +63,11 @@ Welcome to the **Numerical Methods Application**, a powerful tool designed for a
 
 ## 🖼️ Screenshots
 
-![img1](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot1.png)
-![img2](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot2.png)
-![img3](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot3.png)
-![img4](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot4.png)
-![img5](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot5.png)
+![img1](https://github.com/nonnnz/numerical-app/blob/master/screenshots/Screenshot1.png)
+![img2](https://github.com/nonnnz/numerical-app/blob/master/screenshots/Screenshot2.png)
+![img3](https://github.com/nonnnz/numerical-app/blob/master/screenshots/Screenshot3.png)
+![img4](https://github.com/nonnnz/numerical-app/blob/master/screenshots/Screenshot4.png)
+![img5](https://github.com/nonnnz/numerical-app/blob/master/screenshots/Screenshot5.png)
 
 ## 📃 License
 
