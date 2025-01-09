@@ -306,9 +306,28 @@ const MultipleLinearRegression = () => {
     //     return "";
     //   }
     // });
-    const newY_in = y_in.length > numCols ? y_in.slice(0, numRows) : y_in;
+    const newY_in = y_in;
+    newY_in.forEach((col) => {
+      while (newY_in.length < numCols) {
+        newY_in.push("");
+      }
+    });
+
+    const new_find = findArr;
+    new_find.forEach((col) => {
+      while (new_find.length < numRows) {
+        new_find.push("");
+      }
+    });
+    if (new_find.length > numRows) {
+      new_find.splice(numRows, new_find.length - numRows);
+    }
+    if (newY_in.length > numCols) {
+      newY_in.splice(numCols, newY_in.length - numCols);
+    }
     setX_in(newX_in);
     setY_in(newY_in);
+    setFindArr(new_find);
 
     console.log("Dimensions:", numRows, "x", numCols);
     console.log("New x_in:", newX_in);

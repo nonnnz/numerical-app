@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧮 Numerical Methods Application
 
-## Getting Started
+Welcome to the **Numerical Methods Application**, a powerful tool designed for a course project that combines advanced computation, iteration tracking, and graph visualization in one seamless platform. Built using **Next.js**, **Convex**, and **Clerk**, this application ensures a smooth user experience with robust authentication and efficient data management.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### ✏️ Numerical Calculations
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Perform complex numerical computations with ease.
+- Supports a variety of methods including interpolation, root finding, integration, and more.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🔒 Seamless User Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Powered by **Clerk**, ensuring secure and hassle-free login.
+- Support for multiple authentication methods (e.g., email, OAuth, etc.).
 
-## Learn More
+### 🌐 Real-Time Data Management
 
-To learn more about Next.js, take a look at the following resources:
+- Backed by **Convex** for real-time, serverless data storage and synchronization.
+- Effortlessly manage your computations and user data.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Next.js**: Fast, modern React framework for server-side rendering and static site generation.
+- **Convex**: Real-time, serverless database for seamless data management.
+- **Clerk**: Simplified, secure authentication for modern applications.
 
-## Deploy on Vercel
+## 📚 How to Use
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the Repository**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   git clone https://github.com/your-username/numerical-methods-app.git
+   cd numerical-methods-app
+   ```
+
+2. **Install Dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Set Up Environment Variables**:
+
+   - Configure your Clerk and Convex keys in a `.env.local` file:
+     ```plaintext
+     NEXT_PUBLIC_CLERK_FRONTEND_API=<your-clerk-frontend-api>
+     NEXT_PUBLIC_CONVEX_DEPLOYMENT=<your-convex-deployment-url>
+     ```
+
+4. **Run the Application**:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser to explore the app.
+
+5. **Build for Production**:
+   ```bash
+   npm run build
+   ```
+
+## 🖼️ Screenshots
+
+![img1](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot1.png)
+![img2](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot2.png)
+![img3](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot3.png)
+![img4](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot4.png)
+![img5](https://github.com/nonnnz/numerical-app/blob/main/screenshots/Screenshot5.png)
+
+## 📃 License
+
+[![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
